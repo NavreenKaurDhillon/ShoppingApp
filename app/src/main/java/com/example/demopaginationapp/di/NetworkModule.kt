@@ -28,22 +28,12 @@ object NetworkModule {
 
     var isHeadersRequired = false
 
-    @GoogleBaseUrl
+    //Response handling for base url without any qualifier - quotes list
+
+    @Singleton
     @Provides
-    fun provideGoogleBaseUrl(): String {
+    fun provideBaseUrl(): String {
         return BASE_URL  //used to get repos list
-    }
-
-    @ProductBaseUrl
-    @Provides
-    fun provideProductBaseUrl(): String {
-        return PRODUCTS_BASE_URL   //used to get products list
-    }
-
-    @CategoriesBaseUrl
-    @Provides
-    fun provideCategoryBaseUrl(): String {
-        return CATEGORIES_BASE_URL   //used to get products list
     }
 
     @Singleton
@@ -102,6 +92,37 @@ object NetworkModule {
     fun provideApiService(retrofit: Retrofit): RetrofitInterface {
         return retrofit.create(RetrofitInterface::class.java)
     }
+    @Singleton
+    @Provides
+    fun provideRepository(apiService: RetrofitInterface, responseHandler: ResponseHandler): AppRepository {
+        return AppRepository(apiService,responseHandler)
+    }
+
+
+    //below is methods for qualifiers
+
+
+    @GoogleBaseUrl
+    @Provides
+    fun provideGoogleBaseUrl(): String {
+        return BASE_URL  //used to get repos list
+    }
+
+    @ProductBaseUrl
+    @Provides
+    fun provideProductBaseUrl(): String {
+        return PRODUCTS_BASE_URL   //used to get products list
+    }
+
+    @CategoriesBaseUrl
+    @Provides
+    fun provideCategoryBaseUrl(): String {
+        return CATEGORIES_BASE_URL   //used to get products list
+    }
+
+
+
+
 
     @GoogleApi // Qualifies the returned RetrofitInterface instance as the Google API
     @Singleton

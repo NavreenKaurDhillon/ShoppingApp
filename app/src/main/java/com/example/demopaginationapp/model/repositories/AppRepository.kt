@@ -3,6 +3,7 @@ package com.example.demopaginationapp.model.repositories
 import com.example.demopaginationapp.model.dataclasses.CategoriesResponseData
 import com.example.demopaginationapp.model.dataclasses.ProductResponseData
 import com.example.demopaginationapp.model.dataclasses.ResponseData
+import com.example.demopaginationapp.model.dataclasses.ResponseList
 import com.example.demopaginationapp.model.networking.Resource
 import com.example.demopaginationapp.model.networking.ResponseHandler
 import com.example.demopaginationapp.model.networking.RetrofitInterface
@@ -47,4 +48,15 @@ class AppRepository @Inject constructor(
             responseHandler.handleException(e)
         }
     }
+
+    suspend fun getList(
+    ): Resource<ResponseList> {
+        return try {
+            responseHandler.handleResponse(apiService.getList())
+        } catch (e: Exception) {
+
+            responseHandler.handleException(e)
+        }
+    }
+
 }

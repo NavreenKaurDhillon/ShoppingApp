@@ -4,6 +4,7 @@ import com.example.demopaginationapp.model.dataclasses.CategoriesResponseData
 import com.example.demopaginationapp.utils.Constants
 import com.example.demopaginationapp.model.dataclasses.ProductResponseData
 import com.example.demopaginationapp.model.dataclasses.ResponseData
+import com.example.demopaginationapp.model.dataclasses.ResponseList
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -40,5 +41,11 @@ interface RetrofitInterface {
     @FormUrlEncoded
     @POST(Constants.CATEGORIES_LIST)
     suspend fun getCategories(@Field ("parentId") id: String): CategoriesResponseData
+
+
+
+    @GET(Constants.QUOTES_LIST)
+    suspend fun getList(
+    ): ResponseList
 
 }

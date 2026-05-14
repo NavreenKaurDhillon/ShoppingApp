@@ -15,6 +15,7 @@ object Screens {
     const val VivoHome = "vivo_home_screen"
     const val VivoLogin = "vivo_login_screen"
     const val VivoSignup = "vivo_signup_screen"
+    const val QuotesListScreen = "quotes_list_screen"
 }
 
-val bottomBarRoutes = listOf(Screens.Home, Screens.Categories, Screens.Brands, Screens.Favorites, Screens.Cart)
+val bottomBarRoutes = listOf(Screens.Home, Screens.Categories, Screens.Brands, Screens.Favorites, Screens.Cart, Screens.QuotesListScreen)

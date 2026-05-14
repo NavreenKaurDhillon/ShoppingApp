@@ -39,4 +39,10 @@ val BottomNavItems = listOf(
         tabIcon = Icons.Filled.ShoppingCart,
         destination = Screens.Cart
 
+    ) ,
+    BottomNavItem (
+        tabName = "QuotesListScreen",
+        tabIcon = Icons.Filled.List,
+        destination = Screens.QuotesListScreen
+
     ))

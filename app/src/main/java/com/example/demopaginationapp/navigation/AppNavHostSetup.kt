@@ -25,6 +25,7 @@ import com.example.demopaginationapp.view.screens.HomeScreen
 import com.example.demopaginationapp.view.screens.ListScreen
 import com.example.demopaginationapp.view.screens.ProductDetailScreen
 import com.example.demopaginationapp.view.screens.ProductScreen
+import com.example.demopaginationapp.view.screens.QuotesListScreen
 import com.example.demopaginationapp.view.screens.SearchScreen
 
 @Composable
@@ -77,6 +78,9 @@ fun AppNavHostSetup(
         }
         composable(Screens.VivoHome) { //used as key for navigation
             VivoHomeScreen()       //navigate to class
+        }
+        composable(Screens.QuotesListScreen) { //used as key for navigation
+            QuotesListScreen()       //navigate to class
         }
         composable(
             route = "${Screens.RepoDetail}/{data}", // Define the argument name

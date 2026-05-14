@@ -2,6 +2,7 @@ package com.example.demopaginationapp.utils
 
 object Constants {
     const val LISTING = "users/google/repos"
+    const val QUOTES_LIST = "https://fakestoreapi.com/products"
     const val PRODUCTS_LIST = "products"
     const val BASE_URL = "https://api.github.com/"
     const val PRODUCTS_BASE_URL = "https://dummyjson.com/"
