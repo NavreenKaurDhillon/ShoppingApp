@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15.dp">
+
+        <TextView
+            android:id="@+id/tv_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/btn_repos"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btn_search" />
+
+        <ImageButton
+            android:id="@+id/btn_search"
+            android:layout_width="48.dp"
+            android:layout_height="48.dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Search"
+            android:src="@android:drawable/ic_menu_search"
+            app:layout_constraintEnd_toStartOf="@id/btn_repos"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btn_repos"
+            android:layout_width="48.dp"
+            android:layout_height="48.dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Repos"
+            android:src="@drawable/outline_event_list_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_top_items"
+            android:layout_width="0.dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10.dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_search"
+            tools:listitem="@layout/item_category" />
+
+        <TextView
+            android:id="@+id/tv_deals_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15.dp"
+            android:text="Today's Deals &amp; Offers"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_top_items" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_deals"
+            android:layout_width="0.dp"
+            android:layout_height="230.dp"
+            android:layout_marginTop="10.dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_deals_title" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="8dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="@id/vp_deals"
+            app:layout_constraintEnd_toEndOf="@id/vp_deals"
+            app:layout_constraintStart_toStartOf="@id/vp_deals"
+            app:tabBackground="@drawable/tab_selector"
+            app:tabGravity="center"
+            app:tabIndicatorHeight="0.dp"
+            app:tabMaxWidth="12dp"
+            app:tabRippleColor="@null" />
+
+        <TextView
+            android:id="@+id/tv_demanded_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15.dp"
+            android:text="Most Demanded Products"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vp_deals" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_demanded"
+            android:layout_width="0.dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10.dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_demanded_title"
+            tools:listitem="@layout/item_product_card" />
+
+        <TextView
+            android:id="@+id/tv_brands_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15.dp"
+            android:text="Top Brands"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_demanded" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_brands"
+            android:layout_width="0.dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10.dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_brands_title" />
+
+        <TextView
+            android:id="@+id/tv_best_selling_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15.dp"
+            android:text="Best Selling"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_brands" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_best_selling"
+            android:layout_width="0.dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10.dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_best_selling_title"
+            tools:listitem="@layout/item_product_horizontal" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

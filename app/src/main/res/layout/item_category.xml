@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="105.dp"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="4.dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_category"
+        android:layout_width="80.dp"
+        android:layout_height="80.dp"
+        android:background="@android:color/white"
+        android:elevation="4.dp"
+        android:padding="8.dp"
+        android:scaleType="centerInside"
+        app:shapeAppearanceOverlay="@style/CircleShape" />
+
+    <TextView
+        android:id="@+id/tv_category_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4.dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+</LinearLayout>
