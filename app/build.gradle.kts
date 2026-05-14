@@ -33,8 +33,13 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
+    //setup the kotlin & ksp java version
     kotlinOptions {
         jvmTarget = "11"
+    }
+    ksp {
+        arg("jvmTarget", "11")
     }
     buildFeatures {
         compose = true
