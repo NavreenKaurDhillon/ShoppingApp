@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.foundation)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -67,28 +68,28 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
 
     //coroutines
-    implementation(libs.kotlinx.coroutines.android)
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1")
 
     //hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    ksp("com.google.dagger:hilt-android-compiler:2.51.1")
 
     // Network & Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-    implementation(libs.converter.scalars)
-    implementation(libs.adapter.rxjava2)
-    implementation(libs.logging.interceptor)
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:converter-scalars:2.4.0")
+    implementation("com.squareup.retrofit2:adapter-rxjava2:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
 
     //livedata
-    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.0-alpha01")
 
     //okhttp
-    implementation(libs.okhttp)
+    implementation("com.squareup.okhttp3:okhttp:4.9.1")
 
     //viewmodel
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-alpha01")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
 
     implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
 
@@ -101,4 +102,10 @@ dependencies {
     implementation("androidx.compose.runtime:runtime-livedata:1.6.8")
     //dot indicator
     implementation("com.google.accompanist:accompanist-pager-indicators:0.30.1")
+
+    // Google Maps
+    implementation(libs.google.maps.compose)
+    implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
+    implementation(libs.accompanist.permissions)
 }

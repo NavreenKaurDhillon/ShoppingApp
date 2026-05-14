@@ -13,6 +13,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
+import com.example.demopaginationapp.view.vivoscreens.LoginScreen
+import com.example.demopaginationapp.view.vivoscreens.VivoHomeScreen
 import com.example.demopaginationapp.view.screens.BrandScreen
 import com.example.demopaginationapp.view.screens.CartScreen
 import com.example.demopaginationapp.view.screens.CategoriesScreen
@@ -26,7 +28,11 @@ import com.example.demopaginationapp.view.screens.ProductScreen
 import com.example.demopaginationapp.view.screens.SearchScreen
 
 @Composable
-fun AppNavHostSetup(navController: NavHostController, padding: PaddingValues) {
+fun AppNavHostSetup(
+    navController: NavHostController,
+    padding: PaddingValues,
+    startDestination: String = Screens.Home
+) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()  //observe back stack entry and cause recomposition when needed to update ui outside the nav base dn the current route
     val currentRoute = navBackStackEntry?.destination?.route  //need current state to update scaffold padding
     NavHost(
@@ -37,7 +43,7 @@ fun AppNavHostSetup(navController: NavHostController, padding: PaddingValues) {
             Modifier.background(color = Color.White)*/
         ,
         navController = navController,
-        startDestination = Screens.Home  //set the start destination - the first visible default fragment
+        startDestination = startDestination  //set the start destination - the first visible default fragment
     ) {
         composable(Screens.ReposList) { //used as key for navigation
             ListScreen(navController)       //navigate to class
@@ -65,6 +71,12 @@ fun AppNavHostSetup(navController: NavHostController, padding: PaddingValues) {
         }
         composable(Screens.Categories) { //used as key for navigation
             CategoriesScreen()       //navigate to class
+        }
+        composable(Screens.VivoLogin) {
+            LoginScreen(navController)
+        }
+        composable(Screens.VivoHome) { //used as key for navigation
+            VivoHomeScreen()       //navigate to class
         }
         composable(
             route = "${Screens.RepoDetail}/{data}", // Define the argument name

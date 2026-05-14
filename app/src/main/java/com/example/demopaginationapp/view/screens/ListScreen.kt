@@ -41,6 +41,7 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.demopaginationapp.R
 import com.example.demopaginationapp.model.dataclasses.ResponseDataItem
+import com.example.demopaginationapp.navigation.Screens
 import com.example.demopaginationapp.utils.BOLD_STYLE
 import com.example.demopaginationapp.utils.NORMAL_STYLE
 import com.example.demopaginationapp.utils.SMALL_BOLD_STYLE
@@ -164,7 +165,7 @@ private fun ListItemCard(
             //send response object
             val jsonString = Gson().toJson(responseDataItem)
             val encodedJson = URLEncoder.encode(jsonString, StandardCharsets.UTF_8.name())
-            navController.navigate("detail_screen/$encodedJson")
+            navController.navigate("${Screens.RepoDetail}/$encodedJson")
         },
         colors = CardDefaults.elevatedCardColors(
             containerColor = Color.White,

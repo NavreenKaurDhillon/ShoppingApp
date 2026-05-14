@@ -114,7 +114,7 @@ fun FavItemCard(item: Product, navController: NavHostController, width: Dp) {
         colors = CardDefaults.elevatedCardColors(
             containerColor = Color.White
         ), onClick = {
-            navController.navigate("product_detail_screen/${item.id}")
+            navController.navigate("${Screens.ProductDetail}/${item.id}")
         },
         elevation = CardDefaults.elevatedCardElevation(
             defaultElevation = 5.dp)

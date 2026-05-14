@@ -68,6 +68,7 @@ import com.example.demopaginationapp.R
 import com.example.demopaginationapp.model.dataclasses.Product
 import com.example.demopaginationapp.model.networking.Resource
 import com.example.demopaginationapp.model.networking.Status
+import com.example.demopaginationapp.navigation.Screens
 import com.example.demopaginationapp.utils.BOLD_STYLE
 import com.example.demopaginationapp.utils.NORMAL_STYLE
 import com.example.demopaginationapp.viewmodel.ProductViewModel
@@ -201,7 +202,7 @@ fun GridItemCard(
             containerColor = Color.White
 
         ), onClick = {
-            navController.navigate("product_detail_screen/${item.id}")
+            navController.navigate("${Screens.ProductDetail}/${item.id}")
         },
         elevation = CardDefaults.elevatedCardElevation(
             defaultElevation = 6.dp
