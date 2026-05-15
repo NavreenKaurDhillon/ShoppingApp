@@ -16,6 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class QuoteViewModel @Inject constructor(private val appRepository: AppRepository) : ViewModel() {
+
     private var rawList = MutableLiveData<Resource<ResponseList>>()
     var itemsList: LiveData<Resource<ResponseList>> = rawList
 
