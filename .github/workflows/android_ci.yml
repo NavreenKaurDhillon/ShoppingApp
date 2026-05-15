@@ -3,9 +3,9 @@ name: Android Unit Test CI
 # 1. When should this run?
 on:
   push:
-    branches: [ "main", "master" ] # Runs when you push to these branches
+    branches: [ "*" ] # Runs when you push to these branches
   pull_request:
-    branches: [ "main", "master" ] # Runs when you open a PR
+    branches: [ "*" ] # Runs when you open a PR
 
 jobs:
   test:
