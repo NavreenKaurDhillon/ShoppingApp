@@ -6,6 +6,8 @@ import com.example.demopaginationapp.model.dataclasses.ResponseList
 import com.example.demopaginationapp.model.dataclasses.ResponseListItem
 import com.example.demopaginationapp.model.networking.Resource
 import com.example.demopaginationapp.model.repositories.AppRepository
+import com.example.demopaginationapp.utils.ConnectivityObserver
+import com.example.demopaginationapp.utils.NetworkConnectivityObserver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -32,12 +34,13 @@ class QuoteViewModelTest {
     // 2. The Mocks
     private lateinit var viewModel: QuoteViewModel
     private val mockRepository = mock(AppRepository::class.java)
+    private val mockConnectivityObserver = mock(NetworkConnectivityObserver::class.java)
 
     @Before
     fun setup() {
         // 3. Setup: Set the Main dispatcher to our test dispatcher
         Dispatchers.setMain(testDispatcher)
-        viewModel = QuoteViewModel(mockRepository)
+        viewModel = QuoteViewModel(mockRepository,mockConnectivityObserver)
     }
 
     @After
