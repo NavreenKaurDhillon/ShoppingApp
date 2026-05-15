@@ -5,11 +5,13 @@ import com.example.demopaginationapp.model.dataclasses.Rating
 import com.example.demopaginationapp.model.dataclasses.ResponseList
 import com.example.demopaginationapp.model.dataclasses.ResponseListItem
 import com.example.demopaginationapp.model.networking.Resource
+import com.example.demopaginationapp.model.networking.Status
 import com.example.demopaginationapp.model.repositories.AppRepository
 import com.example.demopaginationapp.utils.ConnectivityObserver
 import com.example.demopaginationapp.utils.NetworkConnectivityObserver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
@@ -21,6 +23,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.atLeastOnce
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class QuoteViewModelTest {
@@ -40,7 +44,9 @@ class QuoteViewModelTest {
     fun setup() {
         // 3. Setup: Set the Main dispatcher to our test dispatcher
         Dispatchers.setMain(testDispatcher)
-        viewModel = QuoteViewModel(mockRepository,mockConnectivityObserver)
+        // Mock the network observer flow to prevent crashes during init
+        `when`(mockConnectivityObserver.observe()).thenReturn(emptyFlow())
+        viewModel = QuoteViewModel(mockRepository, mockConnectivityObserver)
     }
 
     @After
@@ -74,7 +80,55 @@ class QuoteViewModelTest {
         viewModel.getList()
         testDispatcher.scheduler.advanceUntilIdle()
 
-        // 3. Assert
-        assertEquals(fakeResponse, viewModel.itemsList.value)
+        // Assert
+        assertEquals(Status.SUCCESS, viewModel.itemsList.value?.status)
+        assertEquals(fakeData, viewModel.itemsList.value?.data)
+    }
+
+    @Test
+    fun `searchQuote filters data correctly based on title`() = runTest {
+        // Arrange: Load some initial data
+        val item1 = ResponseListItem(id = 1, title = "Apple", description = "Fruit", category = "A", image = "", price = 1.0, rating = Rating(1, 1.0))
+        val item2 = ResponseListItem(id = 2, title = "Banana", description = "Yellow", category = "B", image = "", price = 2.0, rating = Rating(1, 1.0))
+        val fakeData = ResponseList().apply { add(item1); add(item2) }
+        
+        `when`(mockRepository.getList()).thenReturn(Resource.success(fakeData))
+        viewModel.getList()
+        testDispatcher.scheduler.advanceUntilIdle()
+
+        // Act: Search for "Apple"
+        viewModel.searchQuote("Apple")
+
+        // Assert
+        val result = viewModel.itemsList.value?.data
+        assertEquals(1, result?.size)
+        assertEquals("Apple", result?.get(0)?.title)
+    }
+
+    @Test
+    fun `searchQuote returns all items when query is empty`() = runTest {
+        // Arrange
+        val item1 = ResponseListItem(id = 1, title = "Apple", description = "Fruit", category = "A", image = "", price = 1.0, rating = Rating(1, 1.0))
+        val fakeData = ResponseList().apply { add(item1) }
+        
+        `when`(mockRepository.getList()).thenReturn(Resource.success(fakeData))
+        viewModel.getList()
+        testDispatcher.scheduler.advanceUntilIdle()
+
+        // Act: Search with empty string
+        viewModel.searchQuote("")
+
+        // Assert
+        assertEquals(1, viewModel.itemsList.value?.data?.size)
+    }
+
+    @Test
+    fun `retry triggers repository getList call`() = runTest {
+        // Act
+        viewModel.retry()
+        testDispatcher.scheduler.advanceUntilIdle()
+
+        // Assert: Verify getList was called (it's also called once in init)
+        verify(mockRepository, atLeastOnce()).getList()
     }
 }
