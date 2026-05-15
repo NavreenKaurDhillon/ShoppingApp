@@ -79,11 +79,53 @@ class QuoteViewModel @Inject constructor(
     }
 
     /**
+     * Sorts the current list based on different criteria.
+     * Demonstrates how tests can verify complex sorting logic.
+     */
+    fun sortQuotes(criteria: SortCriteria) {
+        val currentData = rawList.value?.data ?: return
+        
+        val sortedList = when (criteria) {
+            SortCriteria.PRICE_LOW_TO_HIGH -> currentData.sortedBy { it.price }
+            SortCriteria.PRICE_HIGH_TO_LOW -> currentData.sortedByDescending { it.price }
+            SortCriteria.TITLE_ASCENDING -> currentData.sortedBy { it.title }
+            SortCriteria.RATING_HIGH_TO_LOW -> currentData.sortedByDescending { it.rating.rate }
+        }
+
+        val sortedResponseList = ResponseList().apply { addAll(sortedList) }
+        rawList.postValue(Resource.success(sortedResponseList))
+    }
+
+    /**
+     * Simulates deleting a quote from the list.
+     * Useful for testing state updates.
+     */
+    fun deleteQuote(id: Int) {
+        val currentData = rawList.value?.data ?: return
+        val updatedList = currentData.filter { it.id != id }
+        
+        // Update both the current view and the original cache
+        val newResponseList = ResponseList().apply { addAll(updatedList) }
+        rawList.postValue(Resource.success(newResponseList))
+        
+        originalList?.let { list ->
+            val cachedFiltered = list.filter { it.id != id }
+            originalList = ResponseList().apply { addAll(cachedFiltered) }
+        }
+    }
+
+    /**
      * Manual retry operation for the UI to trigger.
      */
     fun retry() {
         getList()
     }
 
+}
 
+enum class SortCriteria {
+    PRICE_LOW_TO_HIGH,
+    PRICE_HIGH_TO_LOW,
+    TITLE_ASCENDING,
+    RATING_HIGH_TO_LOW
 }

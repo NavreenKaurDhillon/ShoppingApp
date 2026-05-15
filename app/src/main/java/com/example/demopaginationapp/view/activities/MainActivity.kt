@@ -1,6 +1,7 @@
 package com.example.demopaginationapp.view.activities
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -10,12 +11,17 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.demopaginationapp.R
 import com.example.demopaginationapp.databinding.ActivityMainBinding
+import com.example.demopaginationapp.utils.FirebaseUtils
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    @Inject
+    lateinit var firebaseUtils: FirebaseUtils// ... later in code ...
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +59,13 @@ class MainActivity : AppCompatActivity() {
                 binding.bottomNavigation.visibility = View.VISIBLE
             } else {
                 binding.bottomNavigation.visibility = View.GONE
+            }
+        }
+
+        firebaseUtils.getFirebaseToken { token ->
+            if (token != null) {
+                // Send token to your server or save it locally
+                Log.d("firebase_tokennn", "onCreate: tokennn = $token")
             }
         }
     }

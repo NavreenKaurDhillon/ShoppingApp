@@ -131,4 +131,67 @@ class QuoteViewModelTest {
         // Assert: Verify getList was called (it's also called once in init)
         verify(mockRepository, atLeastOnce()).getList()
     }
+
+    @Test
+    fun `sortQuotes sorts by price low to high`() = runTest {
+        // Arrange
+        val item1 = ResponseListItem(id = 1, title = "A", description = "", category = "", image = "", price = 10.0, rating = Rating(1, 5.0))
+        val item2 = ResponseListItem(id = 2, title = "B", description = "", category = "", image = "", price = 5.0, rating = Rating(1, 4.0))
+        val fakeData = ResponseList().apply { add(item1); add(item2) }
+
+        `when`(mockRepository.getList()).thenReturn(Resource.success(fakeData))
+        viewModel.getList()
+        testDispatcher.scheduler.advanceUntilIdle()
+
+        // Act
+        viewModel.sortQuotes(SortCriteria.PRICE_LOW_TO_HIGH)
+
+        // Assert
+        val result = viewModel.itemsList.value?.data
+        assertEquals(2, result?.get(0)?.id) // 5.0 price
+        assertEquals(1, result?.get(1)?.id) // 10.0 price
+    }
+
+    @Test
+    fun `sortQuotes sorts by rating high to low`() = runTest {
+        // Arrange
+        val item1 = ResponseListItem(id = 1, title = "A", description = "", category = "", image = "", price = 10.0, rating = Rating(1, 4.0))
+        val item2 = ResponseListItem(id = 2, title = "B", description = "", category = "", image = "", price = 5.0, rating = Rating(1, 5.0))
+        val fakeData = ResponseList().apply { add(item1); add(item2) }
+
+        `when`(mockRepository.getList()).thenReturn(Resource.success(fakeData))
+        viewModel.getList()
+        testDispatcher.scheduler.advanceUntilIdle()
+
+        // Act
+        viewModel.sortQuotes(SortCriteria.RATING_HIGH_TO_LOW)
+
+        // Assert
+        val result = viewModel.itemsList.value?.data
+        assertEquals(5.0, result?.get(0)?.rating?.rate)
+        assertEquals(4.0, result?.get(1)?.rating?.rate)
+    }
+
+    @Test
+    fun `deleteQuote removes item from both itemsList and original cache`() = runTest {
+        // Arrange
+        val item1 = ResponseListItem(id = 1, title = "Apple", description = "", category = "", image = "", price = 1.0, rating = Rating(1, 1.0))
+        val fakeData = ResponseList().apply { add(item1) }
+
+        `when`(mockRepository.getList()).thenReturn(Resource.success(fakeData))
+        viewModel.getList()
+        testDispatcher.scheduler.advanceUntilIdle()
+
+        // Act: Delete the item
+        viewModel.deleteQuote(1)
+
+        // Assert: It's gone from itemsList
+        assertEquals(0, viewModel.itemsList.value?.data?.size)
+
+        // Act: Clear search (which uses originalList) to verify it's gone from cache too
+        viewModel.searchQuote("")
+        
+        // Assert: Still empty
+        assertEquals(0, viewModel.itemsList.value?.data?.size)
+    }
 }
