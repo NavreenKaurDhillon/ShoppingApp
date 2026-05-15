@@ -9,23 +9,42 @@ import com.example.demopaginationapp.di.ProductApi
 import com.example.demopaginationapp.model.dataclasses.Product
 import com.example.demopaginationapp.model.dataclasses.ProductResponseData
 import com.example.demopaginationapp.model.networking.Resource
+import com.example.demopaginationapp.model.networking.Status
 import com.example.demopaginationapp.model.repositories.AppRepository
+import com.example.demopaginationapp.utils.ConnectivityObserver
+import com.example.demopaginationapp.utils.NetworkConnectivityObserver
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProductViewModel @Inject constructor(@ProductApi private val appRepository: AppRepository) : ViewModel() {
+class ProductViewModel @Inject constructor(
+    @ProductApi private val appRepository: AppRepository,
+    private val connectivityObserver: NetworkConnectivityObserver
+) : ViewModel() {
 
-    var cartProducts =  mutableStateListOf<Product>()  //trigger ui updates
     private var rawProducts = MutableLiveData<Resource<ProductResponseData>>()
     private var baseProducts = MutableLiveData<Resource<ProductResponseData>>()
     var products: LiveData<Resource<ProductResponseData>> = rawProducts
 
 
     init {
+        observeNetwork()
         getProducts()
+    }
+
+    private fun observeNetwork() {
+        connectivityObserver.observe().onEach { status ->
+            if (status == ConnectivityObserver.Status.Available) {
+                // If we were showing an error or just got back online, retry
+                if (rawProducts.value?.status != Status.SUCCESS) {
+                    getProducts()
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 
 

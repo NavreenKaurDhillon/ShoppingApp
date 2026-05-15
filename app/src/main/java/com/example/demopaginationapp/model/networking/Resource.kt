@@ -27,6 +27,10 @@ data class Resource<out T>(val status: Status, val data: T?, val message: String
             return Resource(Status.LOADING, data, null)
 
         }
+
+        fun <T> noInternet(msg: String? = "No Internet Connection"): Resource<T> {
+            return Resource(Status.NO_INTERNET, null, msg)
+        }
     }
 }
 enum class Status {

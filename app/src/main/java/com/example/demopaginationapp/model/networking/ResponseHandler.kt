@@ -6,6 +6,7 @@ import com.google.gson.JsonSyntaxException
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.HttpException
+import java.io.IOException
 import javax.inject.Inject
 
 open class ResponseHandler @Inject constructor() {
@@ -18,8 +19,7 @@ open class ResponseHandler @Inject constructor() {
         return when (e) {
             is HttpException -> Resource.error(getErrorMessage(e), null)
             is MalformedJsonException -> Resource.error(getErrorMessage(46456, e), null)
-//            is SocketTimeoutException -> Resource.error(getErrorMessage(25345, e), null)
-//            is IOException -> Resource.error(getErrorMessage(403, e), null)
+            is IOException -> Resource.noInternet()
             is JsonSyntaxException -> Resource.error(getErrorMessage(0, e), null)
             else -> Resource.error(getErrorMessage(Int.MAX_VALUE, e), null)
         }
