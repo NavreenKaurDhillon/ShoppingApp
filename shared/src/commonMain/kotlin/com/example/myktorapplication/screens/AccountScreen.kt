@@ -1,0 +1,34 @@
+package com.example.myktorapplication.screens
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AccountScreen(navController: NavHostController) {
+    Scaffold(topBar = {
+        TopAppBar(
+            { Text("Account") },
+            navigationIcon = {
+                IconButton(onClick = { navController.popBackStack() }) {
+            }
+                },
+        )
+    }) {
+        paddingValues ->
+        Column(modifier = Modifier.padding(paddingValues)) {
+
+        }
+    }
+
+}
