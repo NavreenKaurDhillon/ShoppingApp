@@ -42,14 +42,16 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupClickListeners() {
-        binding.btnSearch.setOnClickListener {
-            findNavController().navigate(R.id.search_screen)
-        }
-        binding.btnRepos.setOnClickListener {
-            findNavController().navigate(R.id.quotes_list_screen)
-        }
-        binding.root.setOnClickListener {
-            findNavController().navigate(R.id.product_screen)
+        binding.apply {
+            btnSearch.setOnClickListener {
+                findNavController().navigate(R.id.search_screen)
+            }
+            btnRepos.setOnClickListener {
+                findNavController().navigate(R.id.quotes_list_screen)
+            }
+            root.setOnClickListener {
+                findNavController().navigate(R.id.product_screen)
+            }
         }
     }
 

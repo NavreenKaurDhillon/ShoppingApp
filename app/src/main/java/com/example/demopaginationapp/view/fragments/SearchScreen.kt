@@ -84,15 +84,15 @@ class SearchFragment : Fragment() {
     }
 
     private fun setupClickListeners() {
-
-        // Back button
-        binding.ivBack.setOnClickListener {
-            findNavController().popBackStack()
-        }
-
-        // Clear search
-        binding.ivClear.setOnClickListener {
-            binding.etSearch.text?.clear()
+        binding.apply {
+            // Back button
+            ivBack.setOnClickListener {
+                findNavController().popBackStack()
+            }
+            // Clear search
+            ivClear.setOnClickListener {
+                binding.etSearch.text?.clear()
+            }
         }
     }
 
