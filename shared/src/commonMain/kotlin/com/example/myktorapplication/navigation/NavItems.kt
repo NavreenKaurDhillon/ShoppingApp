@@ -3,7 +3,7 @@ package com.example.myktorapplication.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List
-import com.example.myktorapplication.data.dataclasses.BottomNavItem
+import com.example.myktorapplication.model.dataclasses.BottomNavItem
 
 val BottomNavItems = listOf(
 

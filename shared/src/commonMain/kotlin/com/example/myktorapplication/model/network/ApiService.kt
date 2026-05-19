@@ -1,6 +1,6 @@
-package com.example.myktorapplication.network
+package com.example.myktorapplication.model.network
 
-import com.example.myktorapplication.data.dataclasses.Product
+import com.example.myktorapplication.model.dataclasses.Product
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation

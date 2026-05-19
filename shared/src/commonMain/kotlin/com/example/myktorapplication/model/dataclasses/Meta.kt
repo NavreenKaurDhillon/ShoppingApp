@@ -1,4 +1,4 @@
-package com.example.myktorapplication.data.dataclasses
+package com.example.myktorapplication.model.dataclasses
 import kotlinx.serialization.Serializable
 
 @Serializable

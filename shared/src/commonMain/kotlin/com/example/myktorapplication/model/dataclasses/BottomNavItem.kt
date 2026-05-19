@@ -1,4 +1,4 @@
-package com.example.myktorapplication.data.dataclasses
+package com.example.myktorapplication.model.dataclasses
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

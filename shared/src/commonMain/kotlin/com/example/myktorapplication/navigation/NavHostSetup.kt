@@ -13,13 +13,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.myktorapplication.navigation.Screens.route
 import com.example.myktorapplication.screens.AccountScreen
-import com.example.myktorapplication.screens.ProductDetailScreen
-import com.example.myktorapplication.screens.ProductScreen
+import com.example.myktorapplication.view.ProductDetailScreen
+import com.example.myktorapplication.view.ProductScreen
+
 @Composable
 fun NavHostSetup(
     navController: NavHostController,
     padding: PaddingValues,
-    ) {
+) {
 
     NavHost(
         modifier = Modifier.background(color = Color.White),

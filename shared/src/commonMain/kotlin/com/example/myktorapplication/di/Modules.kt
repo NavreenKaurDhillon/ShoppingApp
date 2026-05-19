@@ -1,6 +1,6 @@
 package com.example.myktorapplication.di
 
-import com.example.myktorapplication.network.ApiService
+import com.example.myktorapplication.model.network.ApiService
 import com.example.myktorapplication.viewmodel.ProductDetailViewModel
 import com.example.myktorapplication.viewmodel.ProductViewModel
 import org.koin.core.context.startKoin

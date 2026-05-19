@@ -1,4 +1,4 @@
-package com.example.myktorapplication.data.dataclasses
+package com.example.myktorapplication.model.dataclasses
 
 data class Owner(
     val avatar_url: String,

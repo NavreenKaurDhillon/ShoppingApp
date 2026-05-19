@@ -2,8 +2,8 @@ package com.example.myktorapplication.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myktorapplication.data.dataclasses.Product
-import com.example.myktorapplication.network.ApiService
+import com.example.myktorapplication.model.dataclasses.Product
+import com.example.myktorapplication.model.network.ApiService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

@@ -21,11 +21,11 @@ fun AccountScreen(navController: NavHostController) {
             { Text("Account") },
             navigationIcon = {
                 IconButton(onClick = { navController.popBackStack() }) {
-            }
-                },
+                }
+            },
         )
     }) {
-        paddingValues ->
+            paddingValues ->
         Column(modifier = Modifier.padding(paddingValues)) {
 
         }
