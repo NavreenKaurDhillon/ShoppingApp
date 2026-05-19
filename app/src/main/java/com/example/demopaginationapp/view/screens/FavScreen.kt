@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -58,7 +59,8 @@ fun FavScreen(navController: NavHostController) {
     val viewModel: ProductViewModel = hiltViewModel(viewModelStoreOwner = activity)
     val favoritesList = ArrayList<Product>()
 
-    viewModel.products.value?.data?.products?.forEach {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    state.products?.forEach {
         if(it.isFav) favoritesList.add(it)
     }
 

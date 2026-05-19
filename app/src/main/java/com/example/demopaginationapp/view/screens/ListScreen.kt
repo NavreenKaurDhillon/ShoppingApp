@@ -52,6 +52,8 @@ import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
 
+
+//pagination screen using paging library in compose
 @OptIn(ExperimentalGlideComposeApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun ListScreen(navController: NavHostController) {
@@ -80,7 +82,7 @@ fun ListScreen(navController: NavHostController) {
                     modifier = Modifier.size(30.dp)
                 )
             }
-            Text(text = "Google Repos List", style = BOLD_STYLE, fontSize = 20.sp, modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Start)
+            Text(text = "Google Repos Pagination List", style = BOLD_STYLE, fontSize = 20.sp, modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Start)
         }
             LazyColumn(
                 contentPadding = PaddingValues(horizontal = 15.dp),

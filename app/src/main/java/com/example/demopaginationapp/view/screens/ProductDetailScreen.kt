@@ -58,6 +58,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.example.demopaginationapp.R
@@ -79,8 +80,9 @@ fun ProductDetailScreen(data: String?, navController: NavController) {
     val activity = context as ComponentActivity
     val productViewModel: ProductViewModel = hiltViewModel(viewModelStoreOwner = activity)
 
+    val state by productViewModel.state.collectAsStateWithLifecycle()
     var responseData: Product? = null
-    for (p in productViewModel.products.value?.data?.products!!)
+    for (p in state.products)
         if (p.id == data?.toInt())
             responseData = p
 

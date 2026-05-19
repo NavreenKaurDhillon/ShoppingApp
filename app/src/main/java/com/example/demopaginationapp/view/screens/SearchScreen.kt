@@ -29,6 +29,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.demopaginationapp.utils.NORMAL_STYLE
 import com.example.demopaginationapp.viewmodel.ProductViewModel
@@ -39,13 +40,13 @@ fun SearchScreen(navController: NavHostController) {
     val context = LocalContext.current
     val activity = context as ComponentActivity
     val viewModel: ProductViewModel = hiltViewModel(viewModelStoreOwner = activity)
-
-    val filteredProducts by remember(searchText, viewModel.products.value?.data?.products) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    val filteredProducts by remember(searchText, state.products) {
         if (searchText.isBlank()) {
-            mutableStateOf(viewModel.products.value?.data?.products)
+            mutableStateOf(state.products)
         } else {
             mutableStateOf(
-                viewModel.products.value?.data?.products?.filter { product ->
+                state.products?.filter { product ->
                     product.title.contains(searchText, ignoreCase = true) || product.brand?.contains(searchText, ignoreCase = true) == true
                 }
             )

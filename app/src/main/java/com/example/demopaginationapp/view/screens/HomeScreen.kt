@@ -45,6 +45,7 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -68,11 +69,13 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.demopaginationapp.R
+import com.example.demopaginationapp.intents.ProductIntent
 import com.example.demopaginationapp.model.dataclasses.Product
 import com.example.demopaginationapp.model.networking.Resource
 import com.example.demopaginationapp.model.networking.Status
@@ -94,10 +97,13 @@ fun HomeScreen(navController: NavHostController) {
     val context = LocalContext.current
     val activity = context as ComponentActivity
     val viewModel: ProductViewModel = hiltViewModel(viewModelStoreOwner = activity)
-    val productsResource by viewModel.products.observeAsState(
+    /*val productsResource by viewModel.products.observeAsState(
         initial = Resource.loading(null)  //set loading state as initial -> display loader
     )
-    val state = productsResource
+    val state = productsResource*/
+
+    // Observe only state
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
 
     BackHandler(enabled = true) {
@@ -110,23 +116,23 @@ fun HomeScreen(navController: NavHostController) {
         }
     }
 
-    when (productsResource?.status) {
-        Status.LOADING -> {
+    when  {
+        state.isLoading -> {
             Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator() }
         }
-        Status.SUCCESS -> {
-            val data = state.data?.products
-            DisplayHome(data, navController)
-        }
-        Status.ERROR -> {
+
+        state.error!=null -> {
             // Show the error message
             Text(
-                text = "Failed to load products: ${state.message}",
+                text = "Failed to load products: ${state.error}",
                 color = Color.Red,
                 modifier = Modifier.padding(16.dp))
         }
-        else -> {}
+        else -> {
+            val data = state.products
+            DisplayHome(data, navController)
+        }
     }
 }
 

@@ -27,6 +27,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
@@ -41,6 +42,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -65,6 +68,7 @@ import androidx.navigation.NavHostController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.demopaginationapp.R
+import com.example.demopaginationapp.intents.ProductIntent
 import com.example.demopaginationapp.model.dataclasses.Product
 import com.example.demopaginationapp.model.networking.Resource
 import com.example.demopaginationapp.model.networking.Status
@@ -80,10 +84,13 @@ fun ProductScreen(navController: NavHostController) {
     val context = LocalContext.current
     val activity = context as ComponentActivity
     val viewModel: ProductViewModel = hiltViewModel(viewModelStoreOwner = activity)
-    val productsResource by viewModel.products.observeAsState(
+  /*  val productsResource by viewModel.products.observeAsState(
         initial = Resource.loading(null)  //set loading state as initial -> display loader
     )
-    val state = productsResource
+    val state = productsResource*/
+    // Observe only state
+    val state by viewModel.state.collectAsState()
+
 
     var activeSortOption by remember { mutableStateOf("Relevance") }
     var showDialog by remember { mutableStateOf(false) }
@@ -93,18 +100,25 @@ fun ProductScreen(navController: NavHostController) {
             onDismiss = { showDialog = false },
             onSortSelected = { option ->
                 activeSortOption = option
-                viewModel.setSortOption(option)
+                viewModel.handleIntent(ProductIntent.SortProducts(option))
                 showDialog = false
             })
     }
 
-        when (productsResource.status) {
-            Status.LOADING -> {
+        when  {
+            state.isLoading -> {
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     CircularProgressIndicator() }
             }
-            Status.SUCCESS -> {
-                val data = state.data?.products
+            state.error!=null -> {
+                // Show the error message
+                Text(
+                    text = "Failed to load products: ${state.error}",
+                    color = Color.Red,
+                    modifier = Modifier.padding(16.dp))
+            }
+            else -> {
+                val data = state.products
                 Column {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         IconButton(onClick = {
@@ -138,14 +152,6 @@ fun ProductScreen(navController: NavHostController) {
                 }
 
             }
-            Status.ERROR -> {
-                // Show the error message
-                Text(
-                    text = "Failed to load products: ${state.message}",
-                    color = Color.Red,
-                    modifier = Modifier.padding(16.dp))
-            }
-            else -> {}
         }
 
 }
@@ -374,6 +380,9 @@ fun SortFilterDialog(
             TextButton(onClick = onDismiss) {
                 Text("CANCEL")
             }
-        }
+        },
+        tonalElevation = 15.dp,
+        modifier = Modifier.shadow(15.dp, shape = AlertDialogDefaults.shape)
+
     )
 }

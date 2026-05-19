@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.demopaginationapp.model.networking.Resource
 import com.example.demopaginationapp.model.networking.Status
 import com.example.demopaginationapp.utils.BOLD_STYLE
@@ -40,19 +41,26 @@ fun QuotesListScreen() {
     val context = LocalContext.current
     val activity = context as ComponentActivity
     val viewModel: QuoteViewModel = hiltViewModel(viewModelStoreOwner = activity)
-    viewModel.getList()
-    val resource by viewModel.itemsList.observeAsState(initial = Resource.loading(null))
-    when (resource.status) {
-        Status.LOADING -> {
+   /* viewModel.getList()
+    val resource by viewModel.itemsList.observeAsState(initial = Resource.loading(null))*/
+
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
+    when  {
+        state.isLoading -> {
             Log.d("elwkhkjwehkjehw", "LOADING: resource")
             Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator() }
         }
-        Status.SUCCESS -> {
+        state.error!=null -> {
+            // Show the error message
+            Text(text = "Failed to load products: ${state.error}", color = Color.Red, modifier = Modifier.padding(16.dp))
+        }
+        else -> {
             Column(modifier = Modifier.padding(horizontal = 15.dp)) {
                 Text(text = "Shop By Brands",  fontSize = 20.sp,  modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
                 Spacer(Modifier.height(15.dp))
-                resource?.data?.let {
+                state.products?.let {
                     LazyVerticalGrid(
                         columns = GridCells.Fixed(3),
                         modifier = Modifier
@@ -84,10 +92,5 @@ fun QuotesListScreen() {
                 }
             }
         }
-        Status.ERROR -> {
-            // Show the error message
-            Text(text = "Failed to load products: ${resource.message}", color = Color.Red, modifier = Modifier.padding(16.dp))
-        }
-        else -> {}
     }
 }

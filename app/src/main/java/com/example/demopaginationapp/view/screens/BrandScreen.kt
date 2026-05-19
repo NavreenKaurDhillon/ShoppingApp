@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -22,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.example.demopaginationapp.navigation.Screens
@@ -36,6 +38,7 @@ fun BrandScreen(navController: NavHostController) {
     val activity = context as ComponentActivity
     val viewModel: ProductViewModel = hiltViewModel(viewModelStoreOwner = activity)
 
+    val state by viewModel.state.collectAsStateWithLifecycle()
     BackHandler(enabled = true) {
         //Handle the back press manually -> navigate to home
         navController.navigate(Screens.Home) {
@@ -49,7 +52,7 @@ fun BrandScreen(navController: NavHostController) {
     Column(modifier = Modifier.padding(horizontal = 15.dp)) {
        Text(text = "Shop By Brands", style = BOLD_STYLE, fontSize = 20.sp,  modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
         Spacer(Modifier.height(15.dp))
-        viewModel.products.value?.data?.products?.let {
+        state.products?.let {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(3),
                 modifier = Modifier
