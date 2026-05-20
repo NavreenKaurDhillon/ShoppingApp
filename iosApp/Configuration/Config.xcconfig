@@ -1,6 +1,6 @@
 TEAM_ID=
 
-PRODUCT_NAME=MyKtorApplication
+PRODUCT_NAME=Shopping App
 PRODUCT_BUNDLE_IDENTIFIER=com.example.myktorapplication.MyKtorApplication$(TEAM_ID)
 
 CURRENT_PROJECT_VERSION=1

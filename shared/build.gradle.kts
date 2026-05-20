@@ -28,7 +28,8 @@ kotlin {
         minSdk = libs.versions.android.minSdk.get().toInt()
 
         compilerOptions {
-            jvmTarget = JvmTarget.JVM_11
+//            jvmTarget = JvmTarget.JVM_11
+            jvmTarget.set(JvmTarget.JVM_11) // Use .set() for modern Gradle property assignment
         }
         androidResources {
             enable = true
@@ -49,6 +50,7 @@ kotlin {
             }
         }
         commonMain.dependencies {
+//            implementation(project(androidMain))
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)
@@ -84,9 +86,9 @@ kotlin {
 
 // This task is only required when building for iOS from Xcode.
 // Disabling it for other builds prevents "Build cancelled" and configuration issues.
-/*tasks.matching { it.name == "syncComposeResourcesForIos" }.configureEach {
+tasks.matching { it.name == "syncComposeResourcesForIos" }.configureEach {
     enabled = System.getenv("SDK_NAME") != null
-}*/
+}
 
 dependencies {
     androidRuntimeClasspath(libs.compose.uiTooling)

@@ -42,6 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.ColorPainter
+import androidx.compose.ui.input.key.Key.Companion.R
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -51,6 +52,10 @@ import com.example.myktorapplication.navigation.Screens
 import com.example.myktorapplication.utils.BOLD_STYLE
 import com.example.myktorapplication.utils.CustomCommonImage
 import com.example.myktorapplication.viewmodel.ProductViewModel
+import myktorapplication.shared.generated.resources.Res
+import myktorapplication.shared.generated.resources.filter_icon
+import myktorapplication.shared.generated.resources.sort_icon
+import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -261,7 +266,7 @@ fun SortFilterBottomBar(
         // Button to open the dialog
         TextButton(onClick = onFilterClick, modifier = Modifier.weight(0.5f)) {
             Image(
-                painter = ColorPainter(Color.Red),
+                painter = painterResource(Res.drawable.sort_icon),
                 contentDescription = "Sort and Filter",
                 modifier = Modifier.size(20.dp)
             )
@@ -277,7 +282,7 @@ fun SortFilterBottomBar(
         )
         TextButton(onClick = onFilterClick, modifier = Modifier.weight(0.5f)) {
             Image(
-                painter = ColorPainter(Color.Green),
+                painter =  painterResource(Res.drawable.filter_icon),
                 contentDescription = "Sort and Filter",
                 modifier = Modifier.size(20.dp)
 
