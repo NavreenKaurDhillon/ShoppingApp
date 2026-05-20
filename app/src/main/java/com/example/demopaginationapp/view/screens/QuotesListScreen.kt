@@ -18,7 +18,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,12 +27,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.demopaginationapp.model.networking.Resource
-import com.example.demopaginationapp.model.networking.Status
 import com.example.demopaginationapp.utils.BOLD_STYLE
 import com.example.demopaginationapp.utils.CustomGlideImage
 import com.example.demopaginationapp.viewmodel.QuoteViewModel
-import kotlin.collections.get
 
 //basic api call and fetch response
 @Composable
@@ -60,7 +56,7 @@ fun QuotesListScreen() {
             Column(modifier = Modifier.padding(horizontal = 15.dp)) {
                 Text(text = "Shop By Brands",  fontSize = 20.sp,  modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
                 Spacer(Modifier.height(15.dp))
-                state.products?.let {
+                state.products.let {
                     LazyVerticalGrid(
                         columns = GridCells.Fixed(3),
                         modifier = Modifier
@@ -70,7 +66,7 @@ fun QuotesListScreen() {
                     ) {
                         items(it.size) { item ->
                             Column(modifier = Modifier.clickable{
-//                                navController.navigate(Screens.Profile)
+            //                                navController.navigate(Screens.Profile)
                             }.padding(bottom = 15.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                                 CustomGlideImage(
                                     it[item].image,

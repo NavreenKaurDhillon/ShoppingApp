@@ -1,4 +1,5 @@
 package com.example.demopaginationapp.intents
 
-class CategoryIntent {
+sealed class CategoryIntent {
+    object LoadData : CategoryIntent()
 }

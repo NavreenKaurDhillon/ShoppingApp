@@ -46,8 +46,8 @@ fun SearchScreen(navController: NavHostController) {
             mutableStateOf(state.products)
         } else {
             mutableStateOf(
-                state.products?.filter { product ->
-                    product.title.contains(searchText, ignoreCase = true) || product.brand?.contains(searchText, ignoreCase = true) == true
+                state.products.filter { product ->
+                    product.title.contains(searchText, ignoreCase = true) || product.brand.contains(searchText, ignoreCase = true)
                 }
             )
         }
@@ -97,14 +97,14 @@ fun SearchScreen(navController: NavHostController) {
                 },
                 singleLine = true
         )
-            if (filteredProducts.isNullOrEmpty())
+            if (filteredProducts.isEmpty())
             {
                 Box(modifier = Modifier.fillMaxSize().weight(1f), contentAlignment = Alignment.Center){
                     Text(text="No products found!", style = NORMAL_STYLE, textAlign = TextAlign.Center)
                 }
             }
             else{
-                filteredProducts?.let { ShowProductsList(it, navController, false, Modifier.weight(1f)) }
+                ShowProductsList(filteredProducts, navController, false, Modifier.weight(1f))
             }
         }
 }

@@ -20,7 +20,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -75,7 +75,12 @@ fun CartScreen(navController: NavHostController) {
                     productViewModel.cartProducts.forEachIndexed { index, cartProduct ->
                         CartItemCard(cartProduct, productViewModel)
                         if (index < productViewModel.cartProducts.size - 1) {
-                            Divider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.padding(horizontal = 15.dp, vertical = 15.dp))
+                            HorizontalDivider(
+                                modifier = Modifier.padding(
+                                    horizontal = 15.dp,
+                                    vertical = 15.dp
+                                ), thickness = 1.dp, color = Color.LightGray
+                            )
                         }
                     }
                     Spacer(Modifier.height(20.dp))
@@ -97,10 +102,11 @@ fun CartScreen(navController: NavHostController) {
                     Spacer(Modifier.height(20.dp))
                     Column(modifier = Modifier.padding(15.dp)) {
                         Text(text = "Order Details", style = BOLD_STYLE, fontSize = 20.sp)
-                        Divider(modifier = Modifier.padding(vertical = 8.dp),
+                        HorizontalDivider(
+                            modifier = Modifier.padding(vertical = 8.dp),
                             thickness = 2.dp, // Thicker line
                             color = Color.LightGray  // Custom color
-                                     )
+                        )
                         Row {
                             Text(text = "Items", style = NORMAL_STYLE, color = Color.Gray, modifier = Modifier.weight(0.5f),
                                 fontSize = 18.sp)

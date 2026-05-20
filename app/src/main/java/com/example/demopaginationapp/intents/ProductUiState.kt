@@ -3,7 +3,7 @@ package com.example.demopaginationapp.intents
 import com.example.demopaginationapp.model.dataclasses.Product
 
 data class ProductUiState(
-    val isLoading: Boolean = true,
+    val isLoading: Boolean = false,
     val products: List<Product> = emptyList(),
     val baseProducts: List<Product> = emptyList(),
     val cartProducts: List<Product> = emptyList(),

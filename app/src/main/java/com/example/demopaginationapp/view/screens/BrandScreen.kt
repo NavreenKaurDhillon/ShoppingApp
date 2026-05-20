@@ -52,7 +52,7 @@ fun BrandScreen(navController: NavHostController) {
     Column(modifier = Modifier.padding(horizontal = 15.dp)) {
        Text(text = "Shop By Brands", style = BOLD_STYLE, fontSize = 20.sp,  modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
         Spacer(Modifier.height(15.dp))
-        state.products?.let {
+        state.products.let {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(3),
                 modifier = Modifier

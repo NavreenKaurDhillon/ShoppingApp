@@ -1,6 +1,5 @@
 package com.example.demopaginationapp.view.screens
 
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
@@ -45,9 +44,7 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -75,10 +72,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.demopaginationapp.R
-import com.example.demopaginationapp.intents.ProductIntent
 import com.example.demopaginationapp.model.dataclasses.Product
-import com.example.demopaginationapp.model.networking.Resource
-import com.example.demopaginationapp.model.networking.Status
 import com.example.demopaginationapp.navigation.BottomNavItems
 import com.example.demopaginationapp.navigation.Screens
 import com.example.demopaginationapp.utils.BOLD_STYLE
@@ -92,7 +86,7 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun HomeScreen(navController: NavHostController) {
-    var backPressed : Boolean= false
+    var backPressed = false
 
     val context = LocalContext.current
     val activity = context as ComponentActivity
@@ -267,7 +261,6 @@ fun DisplayHome(data: List<Product>?, navController: NavHostController) {
             ) {
 
                 items(data?.size ?: 0) { item ->
-                    Log.d("kejfhgfwfew", "ProductScreen: ${data?.size ?: 0}")
                     data?.get(item)?.let {
                         CustomGlideImage(it.images[0], 0.dp, 3.dp, 4.dp, CircleShape)
                     }

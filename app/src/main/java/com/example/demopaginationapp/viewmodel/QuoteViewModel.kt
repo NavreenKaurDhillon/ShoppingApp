@@ -40,7 +40,8 @@ class QuoteViewModel @Inject constructor(private val appRepository: AppRepositor
     }
 
      fun getList() {
-        viewModelScope.launch(Dispatchers.IO) {
+         _state.update { it.copy(isLoading = true, error = null) }
+         viewModelScope.launch(Dispatchers.IO) {
             val response = appRepository.getList()
             when(response.status){
                 Status.SUCCESS -> {

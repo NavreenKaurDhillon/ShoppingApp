@@ -50,6 +50,7 @@ class ProductViewModel @Inject constructor(@ProductApi private val appRepository
 
 
     private fun getProducts() {
+        _state.update { it.copy(isLoading = true, error = null) }
         viewModelScope.launch(Dispatchers.IO) {
             val response = appRepository.getProducts()
             //using state pattern

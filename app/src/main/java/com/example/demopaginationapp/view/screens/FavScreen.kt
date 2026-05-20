@@ -60,7 +60,7 @@ fun FavScreen(navController: NavHostController) {
     val favoritesList = ArrayList<Product>()
 
     val state by viewModel.state.collectAsStateWithLifecycle()
-    state.products?.forEach {
+    state.products.forEach {
         if(it.isFav) favoritesList.add(it)
     }
 
